@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Crear cuenta — Tienda de Música{% endblock %}
+{% block content %}
+<h1>Crear cuenta</h1>
+<form method="POST" novalidate class="form">
+    {{ form.hidden_tag() }}
+    <div class="campo">
+        {{ form.nombre_usuario.label }}
+        {{ form.nombre_usuario(class_="input") }}
+        {% for error in form.nombre_usuario.errors %}<span class="error">{{ error }}</span>{% endfor %}
+    </div>
+    <div class="campo">
+        {{ form.email.label }}
+        {{ form.email(class_="input") }}
+        {% for error in form.email.errors %}<span class="error">{{ error }}</span>{% endfor %}
+    </div>
+    <div class="campo">
+        {{ form.password.label }}
+        {{ form.password(class_="input") }}
+        {% for error in form.password.errors %}<span class="error">{{ error }}</span>{% endfor %}
+    </div>
+    <div class="campo">
+        {{ form.confirmar_password.label }}
+        {{ form.confirmar_password(class_="input") }}
+        {% for error in form.confirmar_password.errors %}<span class="error">{{ error }}</span>{% endfor %}
+    </div>
+    {{ form.submit(class_="btn") }}
+</form>
+<p>¿Ya tienes cuenta? <a href="{{ url_for('auth.login') }}">Inicia sesión</a></p>
+{% endblock %}

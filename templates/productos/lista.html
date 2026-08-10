@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Mis productos — Tienda de Música{% endblock %}
+{% block content %}
+<div class="cabecera-lista">
+    <h1>Mis productos</h1>
+    <a class="btn" href="{{ url_for('productos.nuevo') }}">+ Nuevo producto</a>
+</div>
+
+{% if productos %}
+<table class="tabla-productos">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Categoría</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for producto in productos %}
+        <tr>
+            <td>{{ producto.nombre }}</td>
+            <td>{{ producto.categoria }}</td>
+            <td>${{ "%.2f"|format(producto.precio) }}</td>
+            <td>{{ producto.stock }}</td>
+            <td class="acciones">
+                <a href="{{ url_for('productos.editar', producto_id=producto.id) }}">Editar</a>
+                <form method="POST" action="{{ url_for('productos.eliminar', producto_id=producto.id) }}"
+                      onsubmit="return confirm('¿Eliminar {{ producto.nombre }}?');" class="form-inline">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit" class="link-eliminar">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>Todavía no tienes productos. <a href="{{ url_for('productos.nuevo') }}">Agrega el primero</a>.</p>
+{% endif %}
+{% endblock %}

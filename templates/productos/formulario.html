@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}{{ titulo }} — Tienda de Música{% endblock %}
+{% block content %}
+<h1>{{ titulo }}</h1>
+<form method="POST" novalidate class="form">
+    {{ form.hidden_tag() }}
+    <div class="campo">
+        {{ form.nombre.label }}
+        {{ form.nombre(class_="input") }}
+        {% for error in form.nombre.errors %}<span class="error">{{ error }}</span>{% endfor %}
+    </div>
+    <div class="campo">
+        {{ form.categoria.label }}
+        {{ form.categoria(class_="input") }}
+    </div>
+    <div class="campo">
+        {{ form.descripcion.label }}
+        {{ form.descripcion(class_="input", rows="4") }}
+    </div>
+    <div class="campo">
+        {{ form.precio.label }}
+        {{ form.precio(class_="input") }}
+        {% for error in form.precio.errors %}<span class="error">{{ error }}</span>{% endfor %}
+    </div>
+    <div class="campo">
+        {{ form.stock.label }}
+        {{ form.stock(class_="input") }}
+        {% for error in form.stock.errors %}<span class="error">{{ error }}</span>{% endfor %}
+    </div>
+    <div class="acciones-formulario">
+        {{ form.submit(class_="btn") }}
+        <a href="{{ url_for('productos.lista') }}" class="btn btn-secundario">Cancelar</a>
+    </div>
+</form>
+{% endblock %}

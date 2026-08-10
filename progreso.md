@@ -2,13 +2,16 @@
 
 Aplicación web de gestión de inventario (vinilos, CDs, merch, amplificadores, cables, speakers, receivers) desarrollada con Flask, PostgreSQL y SQLAlchemy.
 
-## Estado actual (Paso 1 del plan)
+## Estado actual (Paso 3 del plan completado)
 
-- Estructura del proyecto creada.
-- Modelos definidos: `Usuario` y `Producto` (relación uno a muchos).
-- Configuración de base de datos por variables de entorno.
+- Estructura del proyecto, modelos y migraciones (Paso 1 y 2).
+- Autenticación: registro, login, logout con Flask-Login (`app/routes/auth.py`).
+- CRUD de productos completo, aislado por usuario (`app/routes/productos.py`).
+- Formularios con validación server-side vía Flask-WTF (`app/forms.py`), incluye protección CSRF en toda la app (`CSRFProtect`).
+- Plantillas Jinja2: `base.html` con navegación y mensajes flash, vistas de login/registro y listado/formulario de productos.
+- Verificado con una suite de pruebas end-to-end contra PostgreSQL real: registro, duplicados rechazados, login, CSRF (rechaza POST sin token), crear/editar/eliminar producto, aislamiento entre usuarios (403 al intentar tocar productos ajenos), y redirección a login en rutas protegidas sin sesión.
 
-Aún faltan (próximos pasos): migraciones aplicadas, rutas de autenticación, rutas CRUD y plantillas HTML.
+Aún falta (próximo paso): checklist de pruebas manuales, preparación y despliegue en Render (Paso 4).
 
 ## Instalación local
 
@@ -19,17 +22,10 @@ pip install -r requirements.txt
 cp .env.example .env      # y edita los valores
 ```
 
-Crea la base de datos en PostgreSQL local:
+Base de datos y migraciones:
 
 ```bash
 createdb tienda_musica_dev
-```
-
-Inicializa migraciones (se hará en el Paso 2):
-
-```bash
-flask db init
-flask db migrate -m "tablas iniciales"
 flask db upgrade
 ```
 
@@ -38,3 +34,5 @@ Ejecuta la app:
 ```bash
 python run.py
 ```
+
+Rutas disponibles: `/registro`, `/login`, `/logout`, `/productos`, `/productos/nuevo`, `/productos/<id>/editar`, `/productos/<id>/eliminar`.

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Iniciar sesión — Tienda de Música{% endblock %}
+{% block content %}
+<h1>Iniciar sesión</h1>
+<form method="POST" novalidate class="form">
+    {{ form.hidden_tag() }}
+    <div class="campo">
+        {{ form.nombre_usuario.label }}
+        {{ form.nombre_usuario(class_="input") }}
+        {% for error in form.nombre_usuario.errors %}<span class="error">{{ error }}</span>{% endfor %}
+    </div>
+    <div class="campo">
+        {{ form.password.label }}
+        {{ form.password(class_="input") }}
+        {% for error in form.password.errors %}<span class="error">{{ error }}</span>{% endfor %}
+    </div>
+    {{ form.submit(class_="btn") }}
+</form>
+<p>¿No tienes cuenta? <a href="{{ url_for('auth.registro') }}">Regístrate</a></p>
+{% endblock %}
